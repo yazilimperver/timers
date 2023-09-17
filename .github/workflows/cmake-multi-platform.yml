@@ -55,15 +55,11 @@ jobs:
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
     - name: Configure SpdLog CMake
+      if: runner.os == 'Linux'
       run: |
-        if [ "$RUNNER_OS" == "windows-latest" ]; then
-          echo "No need to build spdlog for Windows"
-        else
-          echo "Spdlog will be build for linux!"
           cd ext/spdlog-1.x/
           mkdir -p build
           cmake -H. -Bbuild -DCMAKE_INSTALL_PREFIX=. -DCMAKE_BUILD_TYPE=Release           
-        fi
       
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
